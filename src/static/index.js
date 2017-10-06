@@ -1,7 +1,8 @@
 require("./styles/app.scss");
+import Map from "./map.js";
 
-var Elm = require("../elm/Main");
-Elm.Main.embed(document.getElementById("main"), {
+const Elm = require("../elm/Main");
+const flags = {
   offices: [
     {
       name: "Boston",
@@ -19,4 +20,14 @@ Elm.Main.embed(document.getElementById("main"), {
       }
     }
   ]
+};
+
+document.addEventListener("DOMContentLoaded", () => {
+  const app = Elm.Main.embed(document.getElementById("main"), flags);
+
+  app.ports.initialized.subscribe(() => {
+    window.requestAnimationFrame(() => {
+      new Map(window.google, document.getElementById("map"));
+    });
+  });
 });

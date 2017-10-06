@@ -1,7 +1,7 @@
 module View exposing (view)
 
 import Html exposing (..)
-import Html.Attributes exposing (class, href)
+import Html.Attributes exposing (class, href, id)
 import Model exposing (Model)
 import Office.View as Office
 
@@ -24,13 +24,19 @@ pageHeader =
 
 pageContent : Model -> Html a
 pageContent model =
-    div [] [ Office.view model.offices ]
+    div []
+        [ div [ id "map" ] []
+        , Office.view model.offices
+        ]
 
 
 pageFooter : Html a
 pageFooter =
     footer []
-        [ p [] [ text "View this on ", a [ href githubUrl ] [ text "GitHub" ] ]
+        [ p []
+            [ text "View this on "
+            , a [ href githubUrl ] [ text "GitHub" ]
+            ]
         ]
 
 

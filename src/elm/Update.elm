@@ -1,4 +1,4 @@
-module Update
+port module Update
     exposing
         ( subscriptions
         , initial
@@ -27,9 +27,12 @@ initial flags =
             Result.map (updateOffices Model.initial) decodedOffices
                 |> Result.withDefault Model.initial
     in
-        ( initialModel, Cmd.none )
+        ( initialModel, initialized () )
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update _ model =
     ( model, Cmd.none )
+
+
+port initialized : () -> Cmd a
