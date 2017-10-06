@@ -18,6 +18,21 @@ const flags = {
           longitude: -71.061634
         }
       }
+    },
+    {
+      name: "New York",
+      address: {
+        street1: "1384 Broadway",
+        street2: "20th Floor",
+        city: "New York",
+        state: "NY",
+        postalCode: "10018",
+        countryCode: "US",
+        latLon: {
+          latitude: 40.752552,
+          longitude: -73.987007
+        }
+      }
     }
   ]
 };
