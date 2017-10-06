@@ -25,9 +25,10 @@ const flags = {
 document.addEventListener("DOMContentLoaded", () => {
   const app = Elm.Main.embed(document.getElementById("main"), flags);
 
-  app.ports.initialized.subscribe(() => {
+  app.ports.initialized.subscribe(latLngs => {
     window.requestAnimationFrame(() => {
-      new Map(window.google, document.getElementById("map"));
+      const map = new Map(window.google, document.getElementById("map"));
+      map.registerLatLngs(latLngs);
     });
   });
 });

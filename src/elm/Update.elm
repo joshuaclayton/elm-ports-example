@@ -7,6 +7,7 @@ port module Update
 
 import Flags
 import Model exposing (Model, Msg(..))
+import Address.Model as Address
 
 
 subscriptions : Model -> Sub Msg
@@ -17,17 +18,13 @@ subscriptions =
 initial : Flags.Model -> ( Model, Cmd Msg )
 initial flags =
     let
-        decodedOffices =
-            Flags.decode flags
-
-        updateOffices model offices =
-            { model | offices = offices }
-
         initialModel =
-            Result.map (updateOffices Model.initial) decodedOffices
-                |> Result.withDefault Model.initial
+            initialModelFromFlags flags
+
+        initialLatLngs =
+            List.map (.geo << .address) initialModel.offices
     in
-        ( initialModel, initialized () )
+        ( initialModel, initialized initialLatLngs )
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -35,4 +32,17 @@ update _ model =
     ( model, Cmd.none )
 
 
-port initialized : () -> Cmd a
+initialModelFromFlags : Flags.Model -> Model
+initialModelFromFlags flags =
+    let
+        decodedOffices =
+            Flags.decode flags
+
+        updateOffices model offices =
+            { model | offices = offices }
+    in
+        Result.map (updateOffices Model.initial) decodedOffices
+            |> Result.withDefault Model.initial
+
+
+port initialized : List Address.LatLon -> Cmd a
