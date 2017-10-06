@@ -8,6 +8,7 @@ port module Update
 import Flags
 import Model exposing (Model, Msg(..))
 import Address.Model as Address
+import Office.Model as Office
 
 
 subscriptions : Model -> Sub Msg
@@ -22,14 +23,26 @@ initial flags =
             initialModelFromFlags flags
 
         initialLatLngs =
-            List.map (.geo << .address) initialModel.offices
+            List.map officeLocation initialModel.offices
     in
         ( initialModel, initialized initialLatLngs )
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
-update _ model =
-    ( model, Cmd.none )
+update msg model =
+    case msg of
+        NoOp ->
+            ( model, Cmd.none )
+
+        SelectOffice office ->
+            ( { model | selectedOffice = Just office }
+            , selectLatLon <| officeLocation office
+            )
+
+
+officeLocation : Office.Model -> Address.LatLon
+officeLocation =
+    .geo << .address
 
 
 initialModelFromFlags : Flags.Model -> Model
@@ -46,3 +59,6 @@ initialModelFromFlags flags =
 
 
 port initialized : List Address.LatLon -> Cmd a
+
+
+port selectLatLon : Address.LatLon -> Cmd a

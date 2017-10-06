@@ -21,6 +21,11 @@ export default class Map {
     this.map.fitBounds(bounds);
   }
 
+  selectLatLng(latLng) {
+    this.map.panTo({ lat: latLng.latitude, lng: latLng.longitude });
+    this.map.setZoom(12);
+  }
+
   _initializeMap() {
     const map = new this.google.maps.Map(this.element, {});
     map.panTo({ lat: 0, lng: 0 });

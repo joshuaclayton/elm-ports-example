@@ -40,10 +40,16 @@ const flags = {
 document.addEventListener("DOMContentLoaded", () => {
   const app = Elm.Main.embed(document.getElementById("main"), flags);
 
+  let map;
+
   app.ports.initialized.subscribe(latLngs => {
     window.requestAnimationFrame(() => {
-      const map = new Map(window.google, document.getElementById("map"));
+      map = new Map(window.google, document.getElementById("map"));
       map.registerLatLngs(latLngs);
     });
+  });
+
+  app.ports.selectLatLon.subscribe(latLng => {
+    map.selectLatLng(latLng);
   });
 });

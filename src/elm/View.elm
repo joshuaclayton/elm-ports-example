@@ -2,11 +2,11 @@ module View exposing (view)
 
 import Html exposing (..)
 import Html.Attributes exposing (class, href, id)
-import Model exposing (Model)
+import Model exposing (Model, Msg)
 import Office.View as Office
 
 
-view : Model -> Html a
+view : Model -> Html Msg
 view model =
     div [ class "container" ]
         [ pageHeader
@@ -22,7 +22,7 @@ pageHeader =
         ]
 
 
-pageContent : Model -> Html a
+pageContent : Model -> Html Msg
 pageContent model =
     div []
         [ div [ id "map" ] []
