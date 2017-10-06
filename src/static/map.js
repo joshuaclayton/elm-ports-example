@@ -25,6 +25,13 @@ export default class Map {
     const map = new this.google.maps.Map(this.element, {});
     map.panTo({ lat: 0, lng: 0 });
     map.setZoom(4);
+
+    this.google.maps.event.addDomListener(window, "resize", () => {
+      const center = map.getCenter();
+      this.google.maps.event.trigger(map, "resize");
+      map.setCenter(center);
+    });
+
     return map;
   }
 }
