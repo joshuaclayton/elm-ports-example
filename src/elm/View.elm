@@ -3,6 +3,7 @@ module View exposing (view)
 import Html exposing (..)
 import Html.Attributes exposing (class, href)
 import Model exposing (Model)
+import Office.View as Office
 
 
 view : Model -> Html a
@@ -22,8 +23,8 @@ pageHeader =
 
 
 pageContent : Model -> Html a
-pageContent _ =
-    div [] [ text "hello world" ]
+pageContent model =
+    div [] [ Office.view model.offices ]
 
 
 pageFooter : Html a

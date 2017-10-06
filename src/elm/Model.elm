@@ -5,15 +5,19 @@ module Model
         , initial
         )
 
+import Office.Model as Office
+
 
 type Msg
     = NoOp
 
 
 type alias Model =
-    Int
+    { offices : List Office.Model
+    }
 
 
-initial : number
+initial : Model
 initial =
-    0
+    { offices = []
+    }

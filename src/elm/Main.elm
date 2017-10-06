@@ -4,11 +4,12 @@ import Model
 import Update
 import View
 import Html
+import Flags
 
 
-main : Program Never Model.Model Model.Msg
+main : Program Flags.Model Model.Model Model.Msg
 main =
-    Html.program
+    Html.programWithFlags
         { init = Update.initial
         , update = Update.update
         , subscriptions = Update.subscriptions
