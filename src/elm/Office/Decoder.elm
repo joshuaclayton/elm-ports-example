@@ -7,6 +7,12 @@ import Address.Decoder as Address
 
 decoder : Decoder Office.Model
 decoder =
-    Decode.map2 Office.Model
+    Decode.map3 Office.Model
+        (Decode.field "id" idDecoder)
         (Decode.field "name" Decode.string)
         (Decode.field "address" Address.decoder)
+
+
+idDecoder : Decoder Office.Id
+idDecoder =
+    Decode.map Office.Id Decode.int

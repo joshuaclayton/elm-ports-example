@@ -5,6 +5,7 @@ const Elm = require("../elm/Main");
 const flags = {
   offices: [
     {
+      id: 1,
       name: "Boston",
       address: {
         street1: "41 Winter St.",
@@ -20,6 +21,7 @@ const flags = {
       }
     },
     {
+      id: 2,
       name: "New York",
       address: {
         street1: "1384 Broadway",
@@ -44,7 +46,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
   app.ports.initialized.subscribe(latLngs => {
     window.requestAnimationFrame(() => {
-      map = new Map(window.google, document.getElementById("map"));
+      map = new Map(
+        window.google,
+        document.getElementById("map"),
+        app.ports.clickedMapMarker.send
+      );
       map.registerLatLngs(latLngs);
     });
   });

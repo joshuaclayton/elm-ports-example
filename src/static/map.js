@@ -1,28 +1,33 @@
 export default class Map {
-  constructor(google, element) {
+  constructor(google, element, clickedCallback) {
     this.google = google;
     this.element = element;
+    this.clickedCallback = clickedCallback;
     this.map = this._initializeMap();
   }
 
   registerLatLngs(latLngs) {
     const bounds = new this.google.maps.LatLngBounds();
 
-    latLngs.forEach(latLng => {
-      const gLatLng = { lat: latLng.latitude, lng: latLng.longitude };
+    latLngs.forEach(o => {
+      const gLatLng = o.latLng;
       bounds.extend(gLatLng);
 
-      new this.google.maps.Marker({
+      const marker = new this.google.maps.Marker({
         position: gLatLng,
         map: this.map
+      });
+
+      marker.addListener("click", () => {
+        this.clickedCallback(o.id);
       });
     });
 
     this.map.fitBounds(bounds);
   }
 
-  selectLatLng(latLng) {
-    this.map.panTo({ lat: latLng.latitude, lng: latLng.longitude });
+  selectLatLng(o) {
+    this.map.panTo(o.latLng);
     this.map.setZoom(12);
   }
 

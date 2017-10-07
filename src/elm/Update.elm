@@ -7,13 +7,13 @@ port module Update
 
 import Flags
 import Model exposing (Model, Msg(..))
-import Address.Model as Address
 import Office.Model as Office
+import GoogleMapMarker
 
 
 subscriptions : Model -> Sub Msg
 subscriptions =
-    always Sub.none
+    always (clickedMapMarker (SelectOfficeById << Office.Id))
 
 
 initial : Flags.Model -> ( Model, Cmd Msg )
@@ -23,7 +23,7 @@ initial flags =
             initialModelFromFlags flags
 
         initialLatLngs =
-            List.map officeLocation initialModel.offices
+            List.map GoogleMapMarker.fromOffice initialModel.offices
     in
         ( initialModel, initialized initialLatLngs )
 
@@ -35,14 +35,32 @@ update msg model =
             ( model, Cmd.none )
 
         SelectOffice office ->
-            ( { model | selectedOffice = Just office }
-            , selectLatLon <| officeLocation office
-            )
+            { model | selectedOffice = Just office }
+                |> navigateMapsToOffice
+
+        SelectOfficeById id ->
+            selectOfficeById id model
+                |> navigateMapsToOffice
 
 
-officeLocation : Office.Model -> Address.LatLon
-officeLocation =
-    .geo << .address
+navigateMapsToOffice : Model -> ( Model, Cmd Msg )
+navigateMapsToOffice model =
+    let
+        cmd =
+            Maybe.map (selectLatLon << GoogleMapMarker.fromOffice) model.selectedOffice
+                |> Maybe.withDefault Cmd.none
+    in
+        ( model, cmd )
+
+
+selectOfficeById : Office.Id -> Model -> Model
+selectOfficeById officeId model =
+    let
+        selectedOffice =
+            List.head <|
+                List.filter (\o -> o.id == officeId) model.offices
+    in
+        { model | selectedOffice = selectedOffice }
 
 
 initialModelFromFlags : Flags.Model -> Model
@@ -58,7 +76,10 @@ initialModelFromFlags flags =
             |> Result.withDefault Model.initial
 
 
-port initialized : List Address.LatLon -> Cmd a
+port initialized : List GoogleMapMarker.Model -> Cmd a
 
 
-port selectLatLon : Address.LatLon -> Cmd a
+port selectLatLon : GoogleMapMarker.Model -> Cmd a
+
+
+port clickedMapMarker : (Int -> msg) -> Sub msg

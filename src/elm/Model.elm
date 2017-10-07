@@ -11,6 +11,7 @@ import Office.Model as Office
 type Msg
     = NoOp
     | SelectOffice Office.Model
+    | SelectOfficeById Office.Id
 
 
 type alias Model =
