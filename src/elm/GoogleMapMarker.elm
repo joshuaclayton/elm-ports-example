@@ -4,24 +4,31 @@ module GoogleMapMarker
         , fromOffice
         )
 
+import Json.Encode as Encode
 import Office.Model as Office
+import Address.Model as Address
 
 
 type alias Model =
-    { latLng : { lat : Float, lng : Float }
-    , id : Int
-    }
+    Encode.Value
 
 
 fromOffice : Office.Model -> Model
 fromOffice ({ id } as office) =
-    let
-        (Office.Id officeId) =
-            id
-    in
-        { latLng =
-            { lat = office.address.geo.latitude
-            , lng = office.address.geo.longitude
-            }
-        , id = officeId
-        }
+    Encode.object
+        [ ( "id", encodeOfficeId id )
+        , ( "latLng", encodeLatLon office.address.geo )
+        ]
+
+
+encodeOfficeId : Office.Id -> Encode.Value
+encodeOfficeId (Office.Id id) =
+    Encode.int id
+
+
+encodeLatLon : Address.LatLon -> Encode.Value
+encodeLatLon latLon =
+    Encode.object
+        [ ( "lat", Encode.float latLon.latitude )
+        , ( "lng", Encode.float latLon.longitude )
+        ]
