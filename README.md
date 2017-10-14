@@ -10,11 +10,13 @@ $ git clone https://github.com/joshuaclayton/elm-ports-example
 $ cd elm-ports-example
 ```
 
-First, ensure Yarn is installed, then:
+First, ensure [Yarn is installed], then:
 
 ```sh
 $ yarn
 ```
+
+[Yarn is installed]: https://yarnpkg.com/lang/en/docs/install/
 
 ## Run the Application
 
