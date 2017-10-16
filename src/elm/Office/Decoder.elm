@@ -5,14 +5,9 @@ import Office.Model as Office
 import Address.Decoder as Address
 
 
-decoder : Decoder Office.Model
-decoder =
+decoder : Office.Id -> Decoder Office.Model
+decoder id =
     Decode.map3 Office.Model
-        (Decode.field "id" idDecoder)
+        (Decode.succeed id)
         (Decode.field "name" Decode.string)
         (Decode.field "address" Address.decoder)
-
-
-idDecoder : Decoder Office.Id
-idDecoder =
-    Decode.map Office.Id Decode.int

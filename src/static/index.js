@@ -5,7 +5,6 @@ const Elm = require("../elm/Main");
 const flags = {
   offices: [
     {
-      id: 1,
       name: "Boston",
       address: {
         street1: "41 Winter St.",
@@ -21,7 +20,6 @@ const flags = {
       }
     },
     {
-      id: 2,
       name: "New York",
       address: {
         street1: "1384 Broadway",
@@ -37,7 +35,6 @@ const flags = {
       }
     },
     {
-      id: 3,
       name: "Austin",
       address: {
         street1: "600 Congress Ave.",
@@ -53,7 +50,6 @@ const flags = {
       }
     },
     {
-      id: 4,
       name: "London",
       address: {
         street1: "15 Long Lane, Barbican",
@@ -69,7 +65,6 @@ const flags = {
       }
     },
     {
-      id: 5,
       name: "Raleigh",
       address: {
         street1: "555 Fayetteville St",
@@ -85,7 +80,6 @@ const flags = {
       }
     },
     {
-      id: 6,
       name: "San Francisco",
       address: {
         street1: "85 2nd St",
@@ -101,7 +95,6 @@ const flags = {
       }
     },
     {
-      id: 7,
       name: "Washington, D.C.",
       address: {
         street1: "810 7th St NE",

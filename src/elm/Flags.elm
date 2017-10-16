@@ -5,6 +5,7 @@ module Flags
         )
 
 import Json.Decode as Decode exposing (Decoder)
+import Json.Decode.Extra as Decode
 import Json.Encode
 import Office.Decoder as Office
 import Office.Model as Office
@@ -16,4 +17,4 @@ type alias Model =
 
 decode : Model -> Result String (List Office.Model)
 decode =
-    Decode.decodeValue (Decode.field "offices" <| Decode.list Office.decoder)
+    Decode.decodeValue (Decode.field "offices" <| Decode.indexedList (Office.decoder << Office.Id))
