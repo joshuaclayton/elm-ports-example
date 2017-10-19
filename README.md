@@ -26,6 +26,25 @@ $ npm start
 
 Then, visit http://localhost:8080/
 
+## Deploy
+
+Deploying to [Heroku] requires two [buildpacks]:
+
+[Heroku]: https://www.heroku.com/
+[buildpacks]: https://devcenter.heroku.com/articles/buildpacks
+
+```
+1. heroku/nodejs
+2. https://github.com/heroku/heroku-buildpack-static.git
+```
+
+This will compile the Elm application to the `dist/` directory with the Node
+buildpack, and then serve the site up statically.
+
+When you deploy to Heroku, you'll also want to configure the
+`GOOGLE_MAPS_API_KEY` environment variable to ensure the map is displayed
+correctly.
+
 ## License
 
 elm-ports-example is Copyright ©2017 Josh Clayton and thoughtbot, inc. It

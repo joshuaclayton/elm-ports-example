@@ -12,7 +12,11 @@ const prod = "production";
 const dev = "development";
 
 // determine build env
-const TARGET_ENV = process.env.npm_lifecycle_event === "build" ? prod : dev;
+const TARGET_ENV =
+  process.env.npm_lifecycle_event === "build" ||
+  process.env.NODE_ENV === "production"
+    ? prod
+    : dev;
 const isDev = TARGET_ENV == dev;
 const isProd = TARGET_ENV == prod;
 
@@ -39,6 +43,16 @@ var commonConfig = {
       {
         test: /\.(eot|ttf|woff|woff2|svg)$/,
         use: "file-loader?publicPath=../../&name=static/css/[hash].[ext]"
+      },
+      {
+        test: /\.js$/,
+        exclude: /(node_modules|bower_components)/,
+        use: {
+          loader: "babel-loader",
+          options: {
+            presets: ["env"]
+          }
+        }
       }
     ]
   },

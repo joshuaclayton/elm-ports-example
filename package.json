@@ -9,21 +9,28 @@
     "url": "https://github.com/joshuaclayton/elm-ports-example"
   },
   "scripts": {
-    "start": "webpack-dev-server --hot --inline"
+    "start": "webpack-dev-server --hot --inline",
+    "postinstall": "node_modules/.bin/webpack -p"
   },
   "devDependencies": {
-    "autoprefixer": "^6.7.7",
-    "bootstrap-sass": "^3.3.7",
-    "copy-webpack-plugin": "^4.0.1",
-    "css-loader": "^0.27.3",
-    "elm": "^0.18.0",
-    "elm-webpack-loader": "^4.3.0",
     "eslint": "^4.8.0",
     "eslint-config-standard": "^10.2.1",
     "eslint-plugin-import": "^2.7.0",
     "eslint-plugin-node": "^5.2.0",
     "eslint-plugin-promise": "^3.5.0",
     "eslint-plugin-standard": "^3.0.1",
+    "webpack-dev-server": "^2.4.2"
+  },
+  "dependencies": {
+    "autoprefixer": "^6.7.7",
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-preset-env": "^1.6.1",
+    "bootstrap-sass": "^3.3.7",
+    "copy-webpack-plugin": "^4.0.1",
+    "css-loader": "^0.27.3",
+    "elm": "^0.18.0",
+    "elm-webpack-loader": "^4.3.0",
     "extract-text-webpack-plugin": "^2.1.0",
     "file-loader": "^0.10.1",
     "html-webpack-plugin": "^2.28.0",
@@ -34,8 +41,7 @@
     "sass-loader": "^6.0.3",
     "style-loader": "^0.16.0",
     "url-loader": "^0.5.8",
-    "webpack": "^2.3.1",
-    "webpack-dev-server": "^2.4.2",
+    "webpack": "^3.8.1",
     "webpack-merge": "^4.1.0"
   }
 }
