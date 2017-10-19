@@ -52,6 +52,11 @@ var commonConfig = {
       template: "src/static/index.html",
       inject: "body",
       filename: "index.html"
+    }),
+    new webpack.DefinePlugin({
+      "process.env": {
+        GOOGLE_MAPS_API_KEY: JSON.stringify(process.env.GOOGLE_MAPS_API_KEY)
+      }
     })
   ]
 };

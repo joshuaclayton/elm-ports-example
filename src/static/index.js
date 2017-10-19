@@ -112,23 +112,43 @@ const flags = {
   ]
 };
 
+const googleMapsUrl = apiKey => {
+  if (typeof apiKey !== "undefined") {
+    return `https://maps.googleapis.com/maps/api/js?key=${apiKey}`;
+  } else {
+    return "https://maps.googleapis.com/maps/api/js";
+  }
+};
+
+const mountGoogleMaps = callback => {
+  const scriptTag = document.createElement("script");
+
+  scriptTag.src = googleMapsUrl(process.env.GOOGLE_MAPS_API_KEY);
+  scriptTag.type = "text/javascript";
+  scriptTag.onload = callback;
+
+  document.head.appendChild(scriptTag);
+};
+
 document.addEventListener("DOMContentLoaded", () => {
-  const app = Elm.Main.embed(document.getElementById("main"), flags);
+  mountGoogleMaps(() => {
+    const app = Elm.Main.embed(document.getElementById("main"), flags);
 
-  let map;
+    let map;
 
-  app.ports.initialized.subscribe(latLngs => {
-    window.requestAnimationFrame(() => {
-      map = new Map(
-        window.google,
-        document.getElementById("map"),
-        app.ports.clickedMapMarker.send
-      );
-      map.registerLatLngs(latLngs);
+    app.ports.initialized.subscribe(latLngs => {
+      window.requestAnimationFrame(() => {
+        map = new Map(
+          window.google,
+          document.getElementById("map"),
+          app.ports.clickedMapMarker.send
+        );
+        map.registerLatLngs(latLngs);
+      });
     });
-  });
 
-  app.ports.selectLatLon.subscribe(latLng => {
-    map.selectLatLng(latLng);
+    app.ports.selectLatLon.subscribe(latLng => {
+      map.selectLatLng(latLng);
+    });
   });
 });
