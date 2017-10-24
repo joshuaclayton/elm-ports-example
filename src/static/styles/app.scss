@@ -1,4 +1,37 @@
+@import "bourbon/bourbon";
+@import "neat/neat";
+@import "base/base";
+
 #map {
   height: 400px;
   width: 100%;
+}
+
+.container {
+  @include grid-container;
+
+  margin: 0 auto;
+  width: 1200px;
+}
+
+.offices {
+  @include grid-container;
+
+  margin: $base-line-height * 1rem 0 0;
+
+  li {
+    @include grid-column(3);
+
+    cursor: pointer;
+    margin-bottom: $base-line-height * 1rem;
+  }
+}
+
+header h1 {
+  font-size: modular-scale(4);
+}
+
+.adr {
+  .locality::after { content: ", "; }
+  .region::after { content: " "; }
 }
